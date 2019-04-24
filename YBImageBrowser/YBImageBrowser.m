@@ -105,9 +105,9 @@
         [self.browserView scrollToPageWithIndex:self->_currentIndex];
         
         [self addSubViews];
- 
+        
         self->_isFirstViewDidAppear = YES;
-
+        
         [self addObserverForSystem];
     }
 }
@@ -172,6 +172,7 @@
 
 - (void)addSubViews {
     [self.view addSubview:self.browserView];
+    [self yb_imageBrowserView:self.browserView hideTooBar:YES];
     [self.toolBars enumerateObjectsUsingBlock:^(__kindof UIView<YBImageBrowserToolBarProtocol> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.view addSubview:obj];
         if ([obj respondsToSelector:@selector(setYb_browserShowSheetViewBlock:)]) {
@@ -314,7 +315,6 @@
     self.browserView.shouldPreload = shouldPreload;
 }
 
-
 #pragma mark - internal
 
 - (void)setHiddenSourceObject:(id)hiddenSourceObject {
@@ -357,6 +357,13 @@
     }
     
     [self hide];
+}
+
+- (void)yb_imageBrowserViewTap:(YBImageBrowserView *)browserView {
+    if (self.toolBars && self.toolBars.count) {
+        BOOL hidden = !self.toolBars.firstObject.hidden;
+        [self yb_imageBrowserView:browserView hideTooBar:hidden];
+    }
 }
 
 - (void)yb_imageBrowserView:(YBImageBrowserView *)browserView changeAlpha:(CGFloat)alpha duration:(NSTimeInterval)duration {

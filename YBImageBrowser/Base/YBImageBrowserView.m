@@ -193,6 +193,14 @@ static NSInteger const preloadCount = 2;
         }];
     }
     
+    if ([cell respondsToSelector:@selector(setYb_browserTapBlock:)]) {
+        __weak typeof(self) wSelf = self;
+        [cell setYb_browserTapBlock:^{
+            __strong typeof(wSelf) sSelf = wSelf;
+            [sSelf.yb_delegate yb_imageBrowserViewTap:sSelf];
+        }];
+    }
+    
     if ([cell respondsToSelector:@selector(setYb_browserScrollEnabledBlock:)]) {
         __weak typeof(self) wSelf = self;
         [cell setYb_browserScrollEnabledBlock:^(BOOL enabled) {
@@ -234,7 +242,7 @@ static NSInteger const preloadCount = 2;
 }
 
 #pragma mark - <UIScrollViewDelegate>
- 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat indexF = scrollView.contentOffset.x / scrollView.bounds.size.width;
     NSUInteger index = (NSUInteger)(indexF + 0.5);

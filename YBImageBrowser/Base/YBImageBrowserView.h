@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)yb_imageBrowserViewDismiss:(YBImageBrowserView *)browserView;
 
+- (void)yb_imageBrowserViewTap:(YBImageBrowserView *)browserView;
+
 - (void)yb_imageBrowserView:(YBImageBrowserView *)browserView changeAlpha:(CGFloat)alpha duration:(NSTimeInterval)duration;
 
 - (void)yb_imageBrowserView:(YBImageBrowserView *)browserView pageIndexChanged:(NSUInteger)index;

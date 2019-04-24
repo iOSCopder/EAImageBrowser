@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) void(^yb_browserDismissBlock)(void);
 
+@property (nonatomic, copy) void(^yb_browserTapBlock)(void);
+
 @property (nonatomic, copy) void(^yb_browserToolBarHiddenBlock)(BOOL hidden);
 
 @property (nonatomic, copy) void(^yb_browserScrollEnabledBlock)(BOOL enabled);

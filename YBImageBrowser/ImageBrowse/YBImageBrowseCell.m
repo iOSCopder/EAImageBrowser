@@ -42,9 +42,12 @@
 @implementation YBImageBrowseCell
 
 @synthesize yb_browserDismissBlock = _yb_browserDismissBlock;
+@synthesize yb_browserTapBlock = _yb_browserTapBlock;
 @synthesize yb_browserScrollEnabledBlock = _yb_browserScrollEnabledBlock;
 @synthesize yb_browserChangeAlphaBlock = _yb_browserChangeAlphaBlock;
 @synthesize yb_browserToolBarHiddenBlock = _yb_browserToolBarHiddenBlock;
+
+
 
 #pragma mark - life cycle
 
@@ -140,7 +143,7 @@
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    self.yb_browserToolBarHiddenBlock(scrollView.zoomScale != 1);
+    //    self.yb_browserToolBarHiddenBlock(scrollView.zoomScale != 1);
     self.cellData.zoomScale = scrollView.zoomScale;
     
     CGRect imageViewFrame = self.mainImageView.frame;
@@ -210,7 +213,8 @@
 }
 
 - (void)respondsToTapSingle:(UITapGestureRecognizer *)tap {
-    [self browserDismiss];
+    self.yb_browserTapBlock();
+    //    [self browserDismiss];
 }
 
 - (void)respondsToTapDouble:(UITapGestureRecognizer *)tap {
@@ -288,7 +292,7 @@
                 self.mainContentView.scrollEnabled = NO;
                 
                 self.yb_browserScrollEnabledBlock(NO);
-                self.yb_browserToolBarHiddenBlock(YES);
+                //                self.yb_browserToolBarHiddenBlock(YES);
                 
                 self->_gestureInteracting = YES;
             }
@@ -320,7 +324,7 @@
     };
     void (^completion)(BOOL finished) = ^(BOOL finished){
         self.yb_browserScrollEnabledBlock(YES);
-        self.yb_browserToolBarHiddenBlock(NO);
+        //        self.yb_browserToolBarHiddenBlock(NO);
         
         self.mainContentView.userInteractionEnabled = YES;
         self.mainContentView.scrollEnabled = YES;
@@ -352,7 +356,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if (!self->_outTransitioning && object == self.cellData && [keyPath isEqualToString:@"dataState"]) {
         [self cellDataStateChanged];
-    } 
+    }
 }
 
 #pragma mark - private
