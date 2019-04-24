@@ -70,6 +70,10 @@ static BOOL _shouldDecodeAsynchronously = YES;
     return self.sourceObject;
 }
 
+- (NSDictionary *)yb_browserCellSourceDic {
+    return self.sourceDic;
+}
+
 - (BOOL)yb_browserShouldHideToolBar {
     return self.zoomScale > 1;
 }
@@ -212,7 +216,7 @@ static BOOL _shouldDecodeAsynchronously = YES;
 
 - (void)queryImageCache {
     if (!self.url) return;
-   
+    
     self.dataState = YBImageBrowseCellDataStateIsQueryingCache;
     [YBIBWebImageManager queryCacheOperationForKey:self.url completed:^(id _Nullable image, NSData * _Nullable imagedata) {
         

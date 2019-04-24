@@ -42,6 +42,8 @@ typedef __kindof UIImage * _Nullable (^YBIBLocalImageBlock)(void);
  In general, it's 'UIImageView', but it can also be 'UIView' or 'CALayer'. */
 @property (nonatomic, weak, nullable) id sourceObject;
 
+@property (nonatomic, copy, nullable) NSDictionary *sourceDic;
+
 /** As a preview image. It's usually a low quality image.
  If 'sourceObject' is valid and is kind of 'UIImageView', it will automatic setting 'thumbImage'. */
 @property (nonatomic, strong, nullable) UIImage *thumbImage;
@@ -60,7 +62,7 @@ typedef __kindof UIImage * _Nullable (^YBIBLocalImageBlock)(void);
 @property (nonatomic, class) CGFloat globalZoomScaleSurplus;
 
 /** The maximum texture size, defalut is '(CGSize){4096, 4096}'.
-When the image exceeds this texture size, it will be compressed asynchronously and cut asynchronously.
+ When the image exceeds this texture size, it will be compressed asynchronously and cut asynchronously.
  It is best to set this value before instantiating all variables.
  */
 @property (nonatomic, class) CGSize globalMaxTextureSize;

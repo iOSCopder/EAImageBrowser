@@ -99,9 +99,17 @@
                     [containerView addSubview:toView];
                     [containerView addSubview:self.animateImageView];
                     toView.alpha = 0;
+                    id<YBImageBrowserCellDataProtocol> data = [self.imageBrowser.browserView dataAtIndex:self.imageBrowser.currentIndex];
+                    NSDictionary *sourceDic = data.yb_browserCellSourceDic;
                     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
                         toView.alpha = 1;
-                        self.animateImageView.frame = [self enter_toFrame];
+                        CGRect frame = [self enter_toFrame];
+                        if (fabs([sourceDic[@"rotate"] floatValue]) > M_PI / 4.0 && fabs([sourceDic[@"rotate"] floatValue]) < M_PI / 4.0 * 3) {
+                            frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.width);
+                        }
+                        self.animateImageView.frame = frame;
+                        self.animateImageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0);
+                        self.animateImageView.center = YBIBGetNormalWindow().center;
                     } completion:^(BOOL finished) {
                         [self.animateImageView removeFromSuperview];
                         [self completeTransition:transitionContext isEnter:YES];
@@ -235,6 +243,9 @@
     self.animateImageView.layer.masksToBounds = sourceLayer.masksToBounds;
     self.animateImageView.layer.cornerRadius = sourceLayer.cornerRadius;
     self.animateImageView.layer.backgroundColor = sourceLayer.backgroundColor;
+    
+    NSDictionary *sourceDic = data.yb_browserCellSourceDic;
+    self.animateImageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, [sourceDic[@"rotate"] floatValue]);
     
     self.animateImageView.frame = [sourceObj convertRect:sourceLayer.bounds toView:YBIBGetNormalWindow()];
     

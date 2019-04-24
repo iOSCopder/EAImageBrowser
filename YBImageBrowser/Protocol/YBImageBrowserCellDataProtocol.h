@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 - (id)yb_browserCellSourceObject;
+- (id)yb_browserCellSourceDic;
 - (BOOL)yb_browserShouldHideToolBar;
 
 - (BOOL)yb_browserAllowSaveToPhotoAlbum;
