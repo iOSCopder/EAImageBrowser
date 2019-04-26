@@ -101,7 +101,7 @@
                     toView.alpha = 0;
                     id<YBImageBrowserCellDataProtocol> data = [self.imageBrowser.browserView dataAtIndex:self.imageBrowser.currentIndex];
                     NSDictionary *sourceDic = data.yb_browserCellSourceDic;
-                    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+                    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                         toView.alpha = 1;
                         CGRect frame = [self enter_toFrame];
                         if (fabs([sourceDic[@"rotate"] floatValue]) > M_PI / 4.0 && fabs([sourceDic[@"rotate"] floatValue]) < M_PI / 4.0 * 3) {

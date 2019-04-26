@@ -172,7 +172,7 @@
 
 - (void)addSubViews {
     [self.view addSubview:self.browserView];
-    [self yb_imageBrowserView:self.browserView hideTooBar:YES];
+//    [self yb_imageBrowserView:self.browserView hideTooBar:YES];
     [self.toolBars enumerateObjectsUsingBlock:^(__kindof UIView<YBImageBrowserToolBarProtocol> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.view addSubview:obj];
         if ([obj respondsToSelector:@selector(setYb_browserShowSheetViewBlock:)]) {
