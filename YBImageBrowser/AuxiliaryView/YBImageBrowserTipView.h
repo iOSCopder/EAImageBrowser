@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)yb_hideTipView;
 
+- (void)yb_hideTipView_1;
+
 @property (nonatomic, strong, readonly) YBImageBrowserTipView *yb_tipView;
 
 @end
