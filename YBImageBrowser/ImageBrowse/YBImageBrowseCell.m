@@ -213,8 +213,12 @@
 }
 
 - (void)respondsToTapSingle:(UITapGestureRecognizer *)tap {
-    self.yb_browserTapBlock();
-    //    [self browserDismiss];
+    if (self.cellData.isSilentMode) {
+        self.yb_browserTapBlock();
+    }
+    else {
+        [self browserDismiss];
+    }
 }
 
 - (void)respondsToTapDouble:(UITapGestureRecognizer *)tap {

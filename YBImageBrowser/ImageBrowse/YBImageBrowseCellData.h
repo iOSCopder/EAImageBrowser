@@ -44,6 +44,8 @@ typedef __kindof UIImage * _Nullable (^YBIBLocalImageBlock)(void);
 
 @property (nonatomic, copy, nullable) NSDictionary *sourceDic;
 
+@property (nonatomic, assign) BOOL isSilentMode;
+
 /** As a preview image. It's usually a low quality image.
  If 'sourceObject' is valid and is kind of 'UIImageView', it will automatic setting 'thumbImage'. */
 @property (nonatomic, strong, nullable) UIImage *thumbImage;
