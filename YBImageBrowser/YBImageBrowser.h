@@ -64,6 +64,8 @@ typedef NS_ENUM(NSInteger, YBImageBrowserTransitionType) {
  */
 - (void)reloadData;
 
+- (void)deleImageAnimationWithIndex:(NSInteger)index;
+
 /**
  Get current data of image browser.
  

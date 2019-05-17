@@ -257,6 +257,53 @@
     [self pageIndexChanged:self.browserView.currentIndex];
 }
 
++ (UIImage*)imageFromView:(UIView*)view{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, view.layer.contentsScale);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (void)deleImageAnimationWithIndex:(NSInteger)index {
+    UICollectionViewCell *cell = (UICollectionViewCell *)[self.browserView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    
+    UIImage *image1 = [self.class imageFromView:cell];
+    UIImage *image2 = ((YBImageBrowseCellData *)[self.browserView dataAtIndex:index + 1]).thumbImage;
+    if (image2 == nil) {
+        // 最后一个
+        YBImageBrowseCellData *data = [self.browserView.yb_dataSource yb_imageBrowserView:self.browserView dataForCellAtIndex:index];
+        image2 = data.thumbImage;
+    }
+    UIImageView *imageview1 = [[UIImageView alloc] initWithFrame:cell.frame];
+    imageview1.image = image1;
+    [self.browserView addSubview:imageview1];
+    
+    UIImageView *imageview2 = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.origin.x + cell.frame.size.width, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
+    imageview2.image = image2;
+    imageview2.contentMode = UIViewContentModeScaleAspectFit;
+    [self.browserView addSubview:imageview2];
+    
+    cell.hidden = YES;
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [imageview1.layer setValue:@(0.1)forKeyPath:@"transform.scale"];
+        imageview1.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            imageview1.hidden = YES;
+            [imageview1 removeFromSuperview];
+            [UIView animateWithDuration:0.25 animations:^{
+                imageview2.frame = cell.frame;
+            } completion:^(BOOL finished) {
+                cell.hidden = NO;
+                [self.browserView yb_reloadData];
+                imageview2.hidden = YES;
+                [imageview2 removeFromSuperview];
+            }];
+        }
+    }];
+}
+
 - (id<YBImageBrowserCellDataProtocol>)currentData {
     return [self.browserView currentData];
 }
