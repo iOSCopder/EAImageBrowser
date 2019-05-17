@@ -73,6 +73,7 @@ typedef NS_ENUM(NSInteger, YBImageBrowserTransitionType) {
  */
 - (id<YBImageBrowserCellDataProtocol>)currentData;
 
+
 /** The default is YES. */
 @property (nonatomic, assign) BOOL shouldPreload;
 
