@@ -170,15 +170,28 @@ static BOOL _shouldDecodeAsynchronously = YES;
     if (!self.imageBlock) return;
     
     self.dataState = YBImageBrowseCellDataStateIsDecoding;
-    YBIB_GET_QUEUE_ASYNC(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.image = self.imageBlock();
-        YBIB_GET_QUEUE_MAIN_ASYNC(^{
+    @try {
+        YBIB_GET_QUEUE_ASYNC(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            self.image = self.imageBlock();
+            YBIB_GET_QUEUE_MAIN_ASYNC(^{
+                self.dataState = YBImageBrowseCellDataStateDecodeComplete;
+                if (self.image) {
+                    [self loadLocalImage];
+                }
+            });
+        });
+    } @catch (NSException *exception) {
+        self.dataState = YBImageBrowseCellDataStateIsDecoding;
+        if (self.imageBlock) {
+            self.image = self.imageBlock();
             self.dataState = YBImageBrowseCellDataStateDecodeComplete;
             if (self.image) {
                 [self loadLocalImage];
             }
-        });
-    });
+        }
+    } @finally {
+        
+    }
 }
 
 - (void)loadImageFromPHAsset {
