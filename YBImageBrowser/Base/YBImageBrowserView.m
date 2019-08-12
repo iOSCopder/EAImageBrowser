@@ -168,7 +168,7 @@ static NSInteger const preloadCount = 2;
     NSString *identifier = NSStringFromClass(cellClass);
     if (![self->_reuseIdentifierSet containsObject:cellClass]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:identifier ofType:@"nib"];
-        if (path) {
+        if (path && identifier && identifier.length > 0) {
             [collectionView registerNib:[UINib nibWithNibName:identifier bundle:nil] forCellWithReuseIdentifier:identifier];
         } else {
             [collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
