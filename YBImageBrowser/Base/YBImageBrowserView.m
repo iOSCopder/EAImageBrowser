@@ -167,12 +167,11 @@ static NSInteger const preloadCount = 2;
     
     NSString *identifier = NSStringFromClass(cellClass);
     if (![self->_reuseIdentifierSet containsObject:cellClass]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:identifier ofType:@"nib"];
-        if (path && identifier && identifier.length > 0) {
-            [collectionView registerNib:[UINib nibWithNibName:identifier bundle:nil] forCellWithReuseIdentifier:identifier];
-        } else {
-            [collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
-        }
+//        NSString *path = [[NSBundle mainBundle] pathForResource:identifier ofType:@"nib"];
+//        if (path) {
+//            [collectionView registerNib:[UINib nibWithNibName:identifier bundle:nil] forCellWithReuseIdentifier:identifier];
+//        }
+        [collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
         [self->_reuseIdentifierSet addObject:cellClass];
     }
     UICollectionViewCell<YBImageBrowserCellProtocol> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
